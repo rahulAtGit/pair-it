@@ -3,17 +3,28 @@
     <head>
         <meta charset="utf-8">
         <title>Pair-It</title>
+        <link rel="stylesheet" href="libraries/bootstrap.min.css">
         <link rel="stylesheet" href="index.css">
         <script type="text/javascript" src="app.js"></script>
     </head>
     <body>
-        <h1>Pair-It</h1>
+
+        <div class="topBar">
+            <div class="game-title">
+                <h1>Pair-It</h1>
+            </div>
+            <div class="game-nav">
+                <ul class="naavbar nav navbar-nav">
+                    <li>
+                        <p>Ethan</p>
+                        <span class="glyphicon glyphicon-user"></span>
+                    </li>
+                </ul>
+                <hr class="horizontal-separator">
+            </div>
+        </div>
         <div id="tiles-box"></div>
-        <h3 id="score">
-
-        </h3>
-        <h3 id="num-clicks">
-
-        </h3>
+        <h3 id="score"></h3>
+        <h3 id="num-clicks"></h3>
     </body>
 </html>
