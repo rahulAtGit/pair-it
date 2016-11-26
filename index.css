@@ -5,52 +5,16 @@ body {
     font-family: 'Roboto';
 }
 
-#tiles-box {
-    position: relative;
-    top: 8vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 40vw;
-    height: 40vw;
-    /*border: 0.1vw solid black;*/
-    border: solid 0.05vw #7CCBDA;
-    padding: 0.2vw 0 0 0.2vw;
-    /*border-radius: 1vw;*/
-    /*box-sizing: border-box;*/
-}
-
-.tile {
-    width: 9.65vw;
-    height: 9.65vw;
-    border: solid 0.05vw #7CCBDA;
-    border-radius: 1vw;
-    /*border: 0.1vw solid black;*/
-    margin-left: -0.2vw;
-}
-
 .topBar {
     display: flex;
-    /*width: 98vw;*/
-    /*position: relative;*/
-    /*left: 0;*/
-    /*display: block;*/
     height: 6vw;
 }
-
 .topBar .game-title {
     width: 25vw;
-    /*display: inline-block;*/
-    /*float: left;*/
 }
-
 .topBar .game-nav {
-    /*float: right;*/
     width: 73vw;
-    /*display: inline-block;*/
-    /*height: 10vw;*/
 }
-
 .topBar .game-title h1 {
     position: relative;
     top: 1.5vw;
@@ -59,7 +23,6 @@ body {
     width: 80%;
     margin: auto;
 }
-
 .topBar ul {
     width: 70vw;
     display: flex;
@@ -67,71 +30,95 @@ body {
     height: 5vw;
     margin-bottom: 1vw;
 }
-
-.topBar li {
+.topBar ul li {
     position: relative;
     top: 2vw;
     right: 2vw;
-    /*height: 2.3vw;*/
-    /*margin-left: 2vw;*/
-    /*display: inline-block;*/
     color: #3E9EA4;
     display: flex;
-    /*float: right !important;*/
 }
-
 .topBar li p {
-    /*float: left;*/
     margin: 0;
     position: relative;
     top: 0.5vw;
     font: Times;
-    /*display: inline-block;*/
     line-height: 2.4vw;
     font-size: 2.4vw !important;
     padding: 0;
 }
-
 .topBar li span {
-    /*margin-left: 0.5vw;*/
-    /*display: inline-block;*/
     position: relative;
     top: 0.1vw;
     width: 2.4vw;
     font-size: 2.4vw;
     margin-left: 1vw;
     height: 2.4vw;
-    /*float: right !important;*/
 }
-
-
-/*.topBar .seperator {
-  position: relative;
-  top: 1.2vw;
-  font-size: 1.8vw !important;
-  display: inline-block;
-  background-color: #20494B;
-  float: right !important;
-  right: 2vw;
-  margin-left: 2vw;
-  height: 3.4vw;
-  width: 0.1vw;
-}*/
-
 .topBar hr {
     margin-top: .5vw;
     height: 0.2vw;
 }
-
 .topBar hr::after {
     height: 0.35vw;
     width: 0.35vw;
 }
-
 .topBar hr::before {
     height: 0.35vw;
     width: 0.35vw;
 }
+
+#tiles-box {
+    position: relative;
+    top: 8vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 40vw;
+    height: 40vw;
+    border: solid 0.05vw #7CCBDA;
+    padding: 0.2vw 0 0 0.2vw;
+}
+#tiles-box .tile {
+    width: 9.65vw;
+    height: 9.65vw;
+    border: solid 0.05vw #7CCBDA;
+    border-radius: 1vw;
+    margin-left: -0.2vw;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .horizontal-separator {
     width: 100%;
