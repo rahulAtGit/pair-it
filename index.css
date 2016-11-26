@@ -67,9 +67,16 @@ body {
     width: 0.35vw;
 }
 
-#tiles-box {
-    position: relative;
-    top: 8vw;
+.game-content{
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+  top: 8vw;
+}
+.game-content .game-stats{
+  width: 30vw;
+}
+.game-content #tiles-box {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
