@@ -5,8 +5,9 @@ var game = {
   firstClickedTile: {},
   secondClickedTile: {},
   randomArray: [],
-  colors: ["#6B81A5", "#7c7678", "#7a9177", "#b4a8bf", "#d15353", "#8e6666",
-    "#aaa09e", "#efd483"
+  colors: ["#D470DB", "#B2DD78", "#F5E2D6", "#61ABAC", "#093139", "#5B75B9",
+    "#CDF0C1", "#36CEA3", "#DA7167", "#6B81A5", "#7c7678", "#b4a8bf",
+    "#d15353", "#8e6666", "#aaa09e", "#efd483", "#23378B", "#6A28A4"
   ],
   initialize: function() {
     for (var i = 0; i < this.num_cols; i++) {
@@ -15,6 +16,8 @@ var game = {
       }
     }
   },
+  score: 0,
+  numOfClicks: 0,
   hideTileColor: function(isClicked) {
     this.secondClickedTile.style.backgroundColor = "transparent";
     this.firstClickedTile.style.backgroundColor = "transparent";
@@ -24,9 +27,14 @@ var game = {
   matchedTileColor: function(isClicked) {
     this.secondClickedTile.style.backgroundColor = "red";
     this.firstClickedTile.style.backgroundColor = "red";
+    this.firstClickedTile.style.opacity = 0.2;
+    this.secondClickedTile.style.opacity = 0.2;
+    this.firstClickedTile.style.visibility = "hidden";
+    this.secondClickedTile.style.visibility = "hidden";
     this.isClicked = isClicked;
   },
   showColor: function(tile) {
+    this.numOfClicks++;
     if (this.firstClickedTile === tile || tile.style.backgroundColor ===
       "red") {
       return;
@@ -35,26 +43,33 @@ var game = {
       this.secondClickedTile = tile;
       this.isClicked = 1;
       if (tile.dataset.color === this.firstClickedTile.dataset.color) {
+        this.score += 50;
         matchTimeout = window.setTimeout(this.matchedTileColor.bind(this, -
             1),
           300);
       } else {
+        this.score -= 10;
         hideTimeout = window.setTimeout(this.hideTileColor.bind(this, -1),
           1000);
 
       }
     } else if (this.isClicked === -1) {
+      this.score -= 10;
       this.isClicked = 0;
       this.firstClickedTile = tile;
       console.log(tile.dataset.color);
     } else if (this.isClicked === 1) {
       if (hideTimeout) {
+        this.score -= 10;
         window.clearTimeout(hideTimeout);
         this.hideTileColor.call(this, 0); //.call(this, tile, firstClickedTile);
         this.firstClickedTile = tile;
       }
     }
     tile.style.backgroundColor = tile.dataset.color;
+    document.getElementById('score').innerHTML = "Your score = " + game.score;
+    document.getElementById('num-clicks').innerHTML = "Number of moves = " +
+      game.numOfClicks;
   },
   populateRandomArray: function() {
     var rand;
@@ -75,12 +90,6 @@ var game = {
   }
 };
 
-var getRandomInt = function(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
 game.initialize();
 
 window.onload = function() {
@@ -97,4 +106,7 @@ window.onload = function() {
       table.appendChild(tile);
     }
   }
+  document.getElementById('score').innerHTML = "Your score = " + game.score;
+  document.getElementById('num-clicks').innerHTML = "Number of moves = " +
+    game.numOfClicks;
 };
