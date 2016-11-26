@@ -1,47 +1,60 @@
 var game = {
   num_cols: 4,
   num_rows: 4,
-  tiles: [],
   isClicked: -1,
-  clickedTile: {},
+  firstClickedTile: {},
+  secondClickedTile: {},
   randomArray: [],
   colors: ["#6B81A5", "#7c7678", "#7a9177", "#b4a8bf", "#d15353", "#8e6666",
     "#aaa09e", "#efd483"
   ],
   initialize: function() {
     for (var i = 0; i < this.num_cols; i++) {
-      this.tiles[i] = [];
       for (var j = 0; j < this.num_rows; j++) {
-        this.tiles[i].push(-1);
         this.randomArray.push(i * this.num_cols + j);
       }
     }
-    console.log(this.tiles);
+  },
+  hideTileColor: function(isClicked) {
+    this.secondClickedTile.style.backgroundColor = "transparent";
+    this.firstClickedTile.style.backgroundColor = "transparent";
+    this.isClicked = isClicked;
+    this.firstClickedTile = this.secondClickedTile = {};
+  },
+  matchedTileColor: function(isClicked) {
+    this.secondClickedTile.style.backgroundColor = "red";
+    this.firstClickedTile.style.backgroundColor = "red";
+    this.isClicked = isClicked;
   },
   showColor: function(tile) {
-    tile.style.backgroundColor = tile.dataset.color;
+    if (this.firstClickedTile === tile || tile.style.backgroundColor ===
+      "red") {
+      return;
+    }
     if (this.isClicked === 0) {
+      this.secondClickedTile = tile;
       this.isClicked = 1;
-      if (tile.dataset.color === clickedTile.dataset.color) {
-        console.log(tile.dataset.color + " = " + clickedTile.dataset.color);
-        console.log("Awesome");
-        tile.style.backgroundColor = "red";
-        clickedTile.style.backgroundColor = "red";
+      if (tile.dataset.color === this.firstClickedTile.dataset.color) {
+        matchTimeout = window.setTimeout(this.matchedTileColor.bind(this, -
+            1),
+          300);
       } else {
-        window.setTimeout(function() {
-          tile.style.backgroundColor = "transparent";
-          clickedTile.style.backgroundColor = "transparent";
-        }, 1000);
+        hideTimeout = window.setTimeout(this.hideTileColor.bind(this, -1),
+          1000);
 
       }
-      console.log(tile.dataset.color);
     } else if (this.isClicked === -1) {
       this.isClicked = 0;
-      clickedTile = tile;
+      this.firstClickedTile = tile;
       console.log(tile.dataset.color);
-    } else {
-      this.isClicked = -1;
+    } else if (this.isClicked === 1) {
+      if (hideTimeout) {
+        window.clearTimeout(hideTimeout);
+        this.hideTileColor.call(this, 0); //.call(this, tile, firstClickedTile);
+        this.firstClickedTile = tile;
+      }
     }
+    tile.style.backgroundColor = tile.dataset.color;
   },
   populateRandomArray: function() {
     var rand;
@@ -59,15 +72,7 @@ var game = {
       self.randomArray[index] = self.colors[Math.floor(value / 2)];
     });
     console.log(self.randomArray);
-  },
-  // bookAtile: function(col, row, seat) {
-  //   this.tiles[col][row] = (this.tiles[col][row] + 1) % 2;
-  //   if (seat.dataset.status === '0') {
-  //     seat.dataset.status = '1';
-  //   } else {
-  //     seat.dataset.status = '0';
-  //   }
-  // }
+  }
 };
 
 var getRandomInt = function(min, max) {
