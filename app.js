@@ -59,7 +59,7 @@ var game = {
         if (game.randomColorArray[value.dataset.colorIndex] !==
           bgColor) {
           game.score -= 10;
-          game.shakeTheTileBox();
+          setTimeout(game.shakeTheTileBox, 200);
           this.hidelements = setTimeout(game.makeTransparentAll, 500);
         } else if (index === game.clickedTiles.length - 1) {
           this.matchlements = setTimeout(game.markAsCompleted, 300);
