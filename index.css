@@ -149,7 +149,9 @@ body {
 
 
 
-
+.transparent{
+  background-color: transparent;
+}
 
 .horizontal-separator {
     width: 100%;
@@ -182,4 +184,10 @@ body {
     width: 0.25vw;
     height: 0.25vw;
     border-radius: 50vw;
+}
+
+
+
+.container-styles{
+  display: none;
 }

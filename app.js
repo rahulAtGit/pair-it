@@ -1,10 +1,12 @@
 var game = {
   num_cols: 4,
   num_rows: 4,
-  isClicked: -1,
-  firstClickedTile: {},
-  secondClickedTile: {},
-  randomArray: [],
+  num_matches_to_win: 2,
+  score: 0,
+  numOfClicks: 0,
+  clickedTiles: [],
+  matchedTiles: [],
+  randomColorArray: [],
   colors: ["#D470DB", "#B2DD78", "#F5E2D6", "#61ABAC", "#5B75B9",
     "#CDF0C1", "#36CEA3", "#DA7167", "#6B81A5", "#7c7678", "#b4a8bf",
     "#d15353", "#8e6666", "#aaa09e", "#efd483", "#23378B", "#6A28A4"
@@ -12,109 +14,110 @@ var game = {
   initialize: function() {
     for (var i = 0; i < this.num_cols; i++) {
       for (var j = 0; j < this.num_rows; j++) {
-        this.randomArray.push(i * this.num_cols + j);
+        this.randomColorArray.push(i * this.num_cols + j);
       }
     }
   },
-  score: 0,
-  numOfClicks: 0,
-  hideTileColor: function(isClicked) {
-    this.secondClickedTile.style.backgroundColor = "transparent";
-    this.firstClickedTile.style.backgroundColor = "transparent";
-    this.secondClickedTile.removeAttribute("class");
-    this.firstClickedTile.removeAttribute("class");
-    this.secondClickedTile.setAttribute("class",
-      "tile unmatched-tile");
-    this.firstClickedTile.setAttribute("class",
-      "tile unmatched-tile");
-    this.isClicked = isClicked;
-    this.firstClickedTile = this.secondClickedTile = {};
+  makeColorVisible: function(tile) {
+    tile.setAttribute("bgcolor", this.randomColorArray[tile.dataset.colorIndex]);
+    game.clickedTiles.push(tile);
   },
-  matchedTileColor: function(isClicked) {
-    this.secondClickedTile.style.backgroundColor = "transparent";
-    this.firstClickedTile.style.backgroundColor = "transparent";
-    this.secondClickedTile.setAttribute("class",
-      "tile glyphicon glyphicon-ok matched-tile");
-    this.firstClickedTile.setAttribute("class",
-      "tile glyphicon glyphicon-ok matched-tile");
-    this.secondClickedTile.setAttribute("is-matched",
-      true);
-    this.firstClickedTile.setAttribute("is-matched",
-      true);
-    this.isClicked = isClicked;
+  makeTransparentAll: function() {
+    game.clickedTiles.forEach(function(value, index) {
+      value.setAttribute("class", "tile");
+      value.setAttribute("bgcolor", "transparent");
+    });
+    game.clickedTiles.splice(0, game.clickedTiles.length);
+  },
+  markAsCompleted: function() {
+    game.clickedTiles.forEach(function(value, index) {
+      value.setAttribute("class",
+        "tile glyphicon glyphicon-ok matched-tile");
+      value.setAttribute("bgcolor", "transparent");
+    });
+    game.clickedTiles.splice(0, game.clickedTiles.length);
+  },
+  shakeTheTileBox: function() {
+    document.getElementById("tiles-box").setAttribute("class",
+      "unmatched-tile");
+    setTimeout(function() {
+      document.getElementById("tiles-box").removeAttribute("class");
+    }, 1000);
   },
   showColor: function(tile) {
-    this.numOfClicks++;
-    if (this.firstClickedTile === tile || tile.hasAttribute("is-matched")) {
+    if (this.clickedTiles.indexOf(tile) !== -1) {
       return;
     }
-    if (this.isClicked === 0) {
-      this.secondClickedTile = tile;
-      this.isClicked = 1;
-      if (tile.dataset.color === this.firstClickedTile.dataset.color) {
-        this.score += 50;
-        matchTimeout = window.setTimeout(this.matchedTileColor.bind(this, -
-            1),
-          300);
-      } else {
-        this.score -= 10;
-        hideTimeout = window.setTimeout(this.hideTileColor.bind(this, -1),
-          1000);
-
-      }
-    } else if (this.isClicked === -1) {
+    this.numOfClicks++;
+    if (this.clickedTiles.length < this.num_matches_to_win - 1) {
+      this.makeColorVisible(tile);
       this.score -= 10;
-      this.isClicked = 0;
-      this.firstClickedTile = tile;
-      console.log(tile.dataset.color);
-    } else if (this.isClicked === 1) {
-      if (hideTimeout) {
-        this.score -= 10;
-        window.clearTimeout(hideTimeout);
-        this.hideTileColor.call(this, 0); //.call(this, tile, firstClickedTile);
-        this.firstClickedTile = tile;
-      }
+    } else if (this.clickedTiles.length === this.num_matches_to_win - 1) {
+      this.makeColorVisible(tile);
+      var bgColor = this.randomColorArray[this.clickedTiles[0].dataset.colorIndex];
+      this.clickedTiles.forEach(function(value, index) {
+        if (game.randomColorArray[value.dataset.colorIndex] !==
+          bgColor) {
+          game.score -= 10;
+          game.shakeTheTileBox();
+          this.hidelements = setTimeout(game.makeTransparentAll, 500);
+        } else if (index === game.clickedTiles.length - 1) {
+          this.matchlements = setTimeout(game.markAsCompleted, 300);
+          game.score += 50;
+        }
+      });
+      //do the else part here
+    } else {
+      window.clearTimeout(hidelements);
+      this.makeTransparentAll();
+      this.makeColorVisible(tile);
+      //dead zone
     }
-    tile.style.backgroundColor = tile.dataset.color;
     document.getElementById('score').innerHTML = "Your score = " + game.score;
     document.getElementById('num-clicks').innerHTML = "Number of moves = " +
       game.numOfClicks;
   },
-  populateRandomArray: function() {
-    var rand;
+  randomiseColorArray: function() {
     var self = this;
-    var i = self.randomArray.length;
+    var i = self.randomColorArray.length;
     var tempArray = [];
     while (i--) {
       j = Math.floor(Math.random() * (i + 1));
-      tempArray.push(self.randomArray[j]);
-      self.randomArray.splice(j, 1);
+      tempArray.push(self.randomColorArray[j]);
+      self.randomColorArray.splice(j, 1);
     }
-    self.randomArray = tempArray.slice(0);
-    console.log(self.randomArray);
-    self.randomArray.forEach(function(value, index) {
-      self.randomArray[index] = self.colors[Math.floor(value / 2)];
+    self.randomColorArray = tempArray.slice(0);
+  },
+  populaterandomColorArray: function() {
+    var self = this;
+    console.log(self.randomColorArray);
+    self.randomColorArray.forEach(function(value, index) {
+      self.randomColorArray[index] = self.colors[Math.floor(value / 2)];
     });
-    console.log(self.randomArray);
+    console.log(self.randomColorArray);
   }
 };
 
 game.initialize();
 
 window.onload = function() {
-  game.populateRandomArray();
+  game.randomiseColorArray();
   var table = document.getElementById('tiles-box');
   for (var i = 0; i < game.num_rows; i++) {
     for (var j = 0; j < game.num_cols; j++) {
       var tile = document.createElement('div');
-      tile.className = "tile";
-      tile.dataset.color = game.randomArray[i * game.num_rows + j];
+      tile.setAttribute("class", "tile testpoly1");
+      tile.dataset.colorIndex = game.randomColorArray[i * game.num_rows + j];
+      tile.setAttribute("bgcolor", "transparent");
       tile.addEventListener("click", function() {
         game.showColor(this);
       });
       table.appendChild(tile);
     }
   }
+  game.populaterandomColorArray();
   document.getElementById('score').innerHTML += game.score;
   document.getElementById('num-clicks').innerHTML += game.numOfClicks;
+  polyfilfn(window);
+  polyfilfn2();
 };

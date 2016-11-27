@@ -6,13 +6,21 @@
         <link rel="stylesheet" href="libraries/animate.css">
         <link rel="stylesheet" href="libraries/bootstrap.min.css">
         <link rel="stylesheet" href="index.css">
-        <script type="text/javascript" src="app.js"></script>
+        <!-- <script type="text/javascript" src="attribute.polyphil.js"></script> -->
+        <!-- <script type="text/javascript" src="app.js"></script> -->
     </head>
     <body>
-
+<div class="container-styles">
+  .testpoly1{
+    background-color:attr(bgcolor);
+  }
+  .testpoly{
+    font-size:attr(addition px);
+  }
+</div>
         <div class="topBar">
             <div class="game-title">
-                <h1>Pair-It</h1>
+                <h1 class="testpoly" addition="50">Pair-It</h1>
             </div>
             <div class="game-nav">
                 <ul class="naavbar nav navbar-nav">
@@ -31,5 +39,9 @@
           </div>
           <div id="tiles-box"></div>
         </div>
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="libraries/attribute.polyphil.js">
+
+        </script>
     </body>
 </html>
