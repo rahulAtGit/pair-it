@@ -5,7 +5,7 @@ var game = {
   firstClickedTile: {},
   secondClickedTile: {},
   randomArray: [],
-  colors: ["#D470DB", "#B2DD78", "#F5E2D6", "#61ABAC", "#093139", "#5B75B9",
+  colors: ["#D470DB", "#B2DD78", "#F5E2D6", "#61ABAC", "#5B75B9",
     "#CDF0C1", "#36CEA3", "#DA7167", "#6B81A5", "#7c7678", "#b4a8bf",
     "#d15353", "#8e6666", "#aaa09e", "#efd483", "#23378B", "#6A28A4"
   ],
@@ -25,18 +25,21 @@ var game = {
     this.firstClickedTile = this.secondClickedTile = {};
   },
   matchedTileColor: function(isClicked) {
-    this.secondClickedTile.style.backgroundColor = "red";
-    this.firstClickedTile.style.backgroundColor = "red";
-    this.firstClickedTile.style.opacity = 0.2;
-    this.secondClickedTile.style.opacity = 0.2;
-    this.firstClickedTile.style.visibility = "hidden";
-    this.secondClickedTile.style.visibility = "hidden";
+    this.secondClickedTile.style.backgroundColor = "transparent";
+    this.firstClickedTile.style.backgroundColor = "transparent";
+    this.secondClickedTile.setAttribute("class",
+      "tile glyphicon glyphicon-ok matched-tile");
+    this.firstClickedTile.setAttribute("class",
+      "tile glyphicon glyphicon-ok matched-tile");
+    this.secondClickedTile.setAttribute("is-matched",
+      true);
+    this.firstClickedTile.setAttribute("is-matched",
+      true);
     this.isClicked = isClicked;
   },
   showColor: function(tile) {
     this.numOfClicks++;
-    if (this.firstClickedTile === tile || tile.style.backgroundColor ===
-      "red") {
+    if (this.firstClickedTile === tile || tile.hasAttribute("is-matched")) {
       return;
     }
     if (this.isClicked === 0) {
@@ -106,7 +109,6 @@ window.onload = function() {
       table.appendChild(tile);
     }
   }
-  document.getElementById('score').innerHTML = "Your score = " + game.score;
-  document.getElementById('num-clicks').innerHTML = "Number of moves = " +
-    game.numOfClicks;
+  document.getElementById('score').innerHTML += game.score;
+  document.getElementById('num-clicks').innerHTML += game.numOfClicks;
 };

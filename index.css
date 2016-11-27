@@ -73,27 +73,48 @@ body {
   justify-content: space-around;
   top: 8vw;
 }
-.game-content .game-stats{
-  width: 30vw;
+.game-content .game-stats h3{
+  font-size: 3.5vw !important;
 }
 .game-content #tiles-box {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    width: 40vw;
-    height: 40vw;
-    border: solid 0.05vw #7CCBDA;
-    padding: 0.2vw 0 0 0.2vw;
+    width: 45vw;
+    height: 45vw;
+    border: solid .05vw #7CCBDA;
+    padding: 1.2vw 1vw 1vw 1.2vw;
+    box-shadow: inset 0vw 0vw 3vw #7CCBDA, inset 0vw 0vw 3vw #7CCBDA;
 }
 #tiles-box .tile {
+  cursor: pointer;
     width: 9.65vw;
     height: 9.65vw;
-    border: solid 0.05vw #7CCBDA;
+    border: solid .25vw #7CCBDA;
     border-radius: 1vw;
     margin-left: -0.2vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 7vw;
+}
+#tiles-box .tile:hover {
+    background-color: #093139;
+}
+#tiles-box .matched-tile {
+  transition: display 2s ease-in;
+}
+.matched-tile {
+    opacity: 1;
+    animation: fade1 0.5s linear;
 }
 
 
+@keyframes fade1 {
+  0% { opacity: 0;transform: rotate(0deg);
+   }
+  100% { opacity: 1; transform: rotate(360deg); }
+}
 
 
 
