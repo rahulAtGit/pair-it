@@ -21,6 +21,12 @@ var game = {
   hideTileColor: function(isClicked) {
     this.secondClickedTile.style.backgroundColor = "transparent";
     this.firstClickedTile.style.backgroundColor = "transparent";
+    this.secondClickedTile.removeAttribute("class");
+    this.firstClickedTile.removeAttribute("class");
+    this.secondClickedTile.setAttribute("class",
+      "tile unmatched-tile");
+    this.firstClickedTile.setAttribute("class",
+      "tile unmatched-tile");
     this.isClicked = isClicked;
     this.firstClickedTile = this.secondClickedTile = {};
   },

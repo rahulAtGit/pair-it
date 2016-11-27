@@ -101,19 +101,22 @@ body {
 #tiles-box .tile:hover {
     background-color: #093139;
 }
-#tiles-box .matched-tile {
-  transition: display 2s ease-in;
-}
 .matched-tile {
     opacity: 1;
     animation: fade1 0.5s linear;
 }
-
-
 @keyframes fade1 {
   0% { opacity: 0;transform: rotate(0deg);
    }
   100% { opacity: 1; transform: rotate(360deg); }
+}
+.unmatched-tile {
+    animation: fade2 0.2s linear;
+}
+@keyframes fade2 {
+  0%,50% {transform: translateX(-1vw);
+   }
+  25%,100% {transform: translateX(1vw); }
 }
 
 
