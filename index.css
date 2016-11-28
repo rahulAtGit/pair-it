@@ -111,7 +111,7 @@ body {
     height: 45vw;
     border: solid .05vw #7CCBDA;
     padding: 1.2vw 1vw 1vw 1.2vw;
-    font-size: 19vw;
+    font-size: 21vw;
     box-shadow: inset 0vw 0vw 3vw #7CCBDA, inset 0vw 0vw 3vw #7CCBDA;
 }
 #tiles-box .tile {

@@ -24,21 +24,16 @@ var game = {
       document.getElementById('score').innerHTML = -10;
       document.getElementById('score').setAttribute("class",
         "score-minus");
-      setTimeout(function() {
-        document.getElementById('score').removeAttribute("class");
-        document.getElementById('score').innerHTML = game.score;
-        document.getElementById('num-clicks').innerHTML = game.numOfClicks;
-      }, 500);
     } else if (deltaScore === 50) {
       document.getElementById('score').innerHTML = "+50";
       document.getElementById('score').setAttribute("class",
         "score-plus");
-      setTimeout(function() {
-        document.getElementById('score').removeAttribute("class");
-        document.getElementById('score').innerHTML = game.score;
-        document.getElementById('num-clicks').innerHTML = game.numOfClicks;
-      }, 500);
     }
+    setTimeout(function() {
+      document.getElementById('score').removeAttribute("class");
+      document.getElementById('score').innerHTML = game.score;
+      document.getElementById('num-clicks').innerHTML = game.numOfClicks;
+    }, 500);
   },
   makeColorVisible: function(tile) {
     tile.setAttribute("bgcolor", this.randomColorArray[tile.dataset.colorIndex]);
