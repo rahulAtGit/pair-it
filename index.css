@@ -73,8 +73,35 @@ body {
   justify-content: space-around;
   top: 8vw;
 }
+.game-content .game-stats {
+  display: flex;
+  width: 40vw;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 20vw;
+}
 .game-content .game-stats h3{
   font-size: 3.5vw !important;
+  align-items: center;
+  display: inline-block !important;
+}
+.game-content .game-stats .score-minus {
+    opacity: 1;
+    animation: fadeupout 0.5s linear;
+}
+@keyframes fadeupout {
+  0% 100% { opacity: 1;transform: translateY(0);
+   }
+  90% { opacity: 0; transform: translateY(-10vw); }
+}
+.game-content .game-stats .score-plus {
+    opacity: 1;
+    animation: fadeinout 0.5s linear;
+}
+@keyframes fadeinout {
+  0% { opacity: 0;transform: translateY(-10vw);
+   }
+  100% { opacity: 1; transform: translateY(0); }
 }
 .game-content #tiles-box {
     display: flex;
@@ -84,6 +111,7 @@ body {
     height: 45vw;
     border: solid .05vw #7CCBDA;
     padding: 1.2vw 1vw 1vw 1.2vw;
+    font-size: 19vw;
     box-shadow: inset 0vw 0vw 3vw #7CCBDA, inset 0vw 0vw 3vw #7CCBDA;
 }
 #tiles-box .tile {
@@ -99,10 +127,11 @@ body {
     font-size: 7vw;
 }
 #tiles-box .tile:hover {
-    background-color: #093139;
+    background-color: white;
 }
 .matched-tile {
     opacity: 1;
+    pointer-events: none;
     animation: fade1 0.5s linear;
 }
 @keyframes fade1 {
@@ -119,36 +148,6 @@ body {
   25%,100% {transform: translateX(1vw); }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .transparent{
   background-color: transparent;
 }
@@ -163,7 +162,6 @@ body {
     margin: 0.1vw;
     border: none;
 }
-
 .horizontal-separator:before {
     content: " ";
     width: 0.25vw;
@@ -174,7 +172,6 @@ body {
     left: 0;
     bottom: -.1vw;
 }
-
 .horizontal-separator:after {
     background-color: #327C7F;
     bottom: -.1vw;

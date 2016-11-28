@@ -18,6 +18,28 @@ var game = {
       }
     }
   },
+  animateScore: function(deltaScore) {
+    game.score += deltaScore;
+    if (deltaScore === -10) {
+      document.getElementById('score').innerHTML = -10;
+      document.getElementById('score').setAttribute("class",
+        "score-minus");
+      setTimeout(function() {
+        document.getElementById('score').removeAttribute("class");
+        document.getElementById('score').innerHTML = game.score;
+        document.getElementById('num-clicks').innerHTML = game.numOfClicks;
+      }, 500);
+    } else if (deltaScore === 50) {
+      document.getElementById('score').innerHTML = "+50";
+      document.getElementById('score').setAttribute("class",
+        "score-plus");
+      setTimeout(function() {
+        document.getElementById('score').removeAttribute("class");
+        document.getElementById('score').innerHTML = game.score;
+        document.getElementById('num-clicks').innerHTML = game.numOfClicks;
+      }, 500);
+    }
+  },
   makeColorVisible: function(tile) {
     tile.setAttribute("bgcolor", this.randomColorArray[tile.dataset.colorIndex]);
     game.clickedTiles.push(tile);
@@ -35,7 +57,16 @@ var game = {
         "tile glyphicon glyphicon-ok matched-tile");
       value.setAttribute("bgcolor", "transparent");
     });
+    game.matchedTiles = game.matchedTiles.concat(game.clickedTiles);
     game.clickedTiles.splice(0, game.clickedTiles.length);
+    if (game.matchedTiles.length === game.num_cols * game.num_rows) {
+      document.getElementById("tiles-box").innerHTML = game.score;
+      document.getElementById("tiles-box").setAttribute("class",
+        "glyphicon glyphicon-ok matched-tile");
+      game.matchedTiles.forEach(function(value, index) {
+        value.style.display = "none";
+      });
+    }
   },
   shakeTheTileBox: function() {
     document.getElementById("tiles-box").setAttribute("class",
@@ -51,31 +82,27 @@ var game = {
     this.numOfClicks++;
     if (this.clickedTiles.length < this.num_matches_to_win - 1) {
       this.makeColorVisible(tile);
-      this.score -= 10;
+      game.animateScore(-10);
     } else if (this.clickedTiles.length === this.num_matches_to_win - 1) {
       this.makeColorVisible(tile);
       var bgColor = this.randomColorArray[this.clickedTiles[0].dataset.colorIndex];
       this.clickedTiles.forEach(function(value, index) {
         if (game.randomColorArray[value.dataset.colorIndex] !==
           bgColor) {
-          game.score -= 10;
+          game.animateScore(-10);
           setTimeout(game.shakeTheTileBox, 200);
           this.hidelements = setTimeout(game.makeTransparentAll, 500);
         } else if (index === game.clickedTiles.length - 1) {
           this.matchlements = setTimeout(game.markAsCompleted, 300);
-          game.score += 50;
+          game.animateScore(50);
         }
       });
-      //do the else part here
     } else {
+      game.animateScore(-10);
       window.clearTimeout(hidelements);
       this.makeTransparentAll();
       this.makeColorVisible(tile);
-      //dead zone
     }
-    document.getElementById('score').innerHTML = "Your score = " + game.score;
-    document.getElementById('num-clicks').innerHTML = "Number of moves = " +
-      game.numOfClicks;
   },
   randomiseColorArray: function() {
     var self = this;
@@ -116,8 +143,8 @@ window.onload = function() {
     }
   }
   game.populaterandomColorArray();
-  document.getElementById('score').innerHTML += game.score;
-  document.getElementById('num-clicks').innerHTML += game.numOfClicks;
+  document.getElementById('score').innerHTML = game.score;
+  document.getElementById('num-clicks').innerHTML = game.numOfClicks;
   polyfilfn(window);
   polyfilfn2();
 };

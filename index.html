@@ -10,17 +10,12 @@
         <!-- <script type="text/javascript" src="app.js"></script> -->
     </head>
     <body>
-<div class="container-styles">
-  .testpoly1{
-    background-color:attr(bgcolor);
-  }
-  .testpoly{
-    font-size:attr(addition px);
-  }
-</div>
+        <div class="container-styles">
+            .testpoly1{ background-color:attr(bgcolor); }
+        </div>
         <div class="topBar">
             <div class="game-title">
-                <h1 class="testpoly" addition="50">Pair-It</h1>
+                <h1>Pair-It</h1>
             </div>
             <div class="game-nav">
                 <ul class="naavbar nav navbar-nav">
@@ -33,15 +28,22 @@
             </div>
         </div>
         <div class="game-content">
-          <div class="game-stats">
-            <h3 class="animated bounce" id="score">Your Score = </h3>
-            <h3 class="animated bounce" id="num-clicks">Number of Moves = </h3>
-          </div>
-          <div id="tiles-box"></div>
+            <div class="game-stats">
+                <div>
+                    <h3>Your Score:
+                    </h3>
+                    <h3 id="score"></h3>
+                </div>
+                <div>
+                    <h3>Number of Clicks:
+
+                    </h3>
+                    <h3 id="num-clicks"></h3>
+                </div>
+            </div>
+            <div id="tiles-box"></div>
         </div>
         <script type="text/javascript" src="app.js"></script>
-        <script type="text/javascript" src="libraries/attribute.polyphil.js">
-
-        </script>
+        <script type="text/javascript" src="libraries/attribute.polyphil.js"></script>
     </body>
 </html>
